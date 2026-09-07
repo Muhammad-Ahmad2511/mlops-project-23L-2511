@@ -13,6 +13,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, r2_score
+from sklearn.preprocessing import StandardScaler
 
 STUDENT_ID = "23L-2511"
 
@@ -35,7 +36,9 @@ def load_data(path: str) -> pd.DataFrame:
 
 
 def preprocess(df: pd.DataFrame):
-    """Basic preprocessing: split features/target, handle missing values."""
+    """Basic preprocessing: split features/target, handle missing values.
+    NOTE: No scaling here — scaling happens AFTER the train/test split
+    to avoid data leakage."""
     df = df.dropna()
 
     if "price" not in df.columns:
@@ -81,6 +84,12 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=RANDOM_STATE
     )
+
+    # Scale AFTER splitting: fit only on training data, then apply
+    # the same transform to test data. This prevents data leakage.
+    scaler = StandardScaler()
+    X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=X_train.columns)
+    X_test = pd.DataFrame(scaler.transform(X_test), columns=X_test.columns)
 
     model = train_model(X_train, y_train)
     evaluate_model(model, X_test, y_test)
