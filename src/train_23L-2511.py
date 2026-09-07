@@ -17,8 +17,8 @@ from sklearn.metrics import mean_absolute_error, r2_score
 STUDENT_ID = "23L-2511"
 
 # Hyperparameters
-LEARNING_RATE = None  # placeholder for Part 3 (RandomForest has no learning_rate, kept for demo purposes)
-N_ESTIMATORS = 200
+LEARNING_RATE = 0.05  # placeholder for Part 3 (RandomForest has no learning_rate, kept for demo purposes)
+N_ESTIMATORS = 300
 RANDOM_STATE = 42
 
 DATA_PATH = os.path.join("data", "house_prices.csv")
