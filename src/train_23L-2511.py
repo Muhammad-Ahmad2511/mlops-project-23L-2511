@@ -81,7 +81,10 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=RANDOM_STATE
     )
-
+    from sklearn.preprocessing import MinMaxScaler
+    scaler = MinMaxScaler()
+    X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=X_train.columns)
+    X_test = pd.DataFrame(scaler.transform(X_test), columns=X_test.columns)
     model = train_model(X_train, y_train)
     evaluate_model(model, X_test, y_test)
     save_model(model, MODEL_PATH)
