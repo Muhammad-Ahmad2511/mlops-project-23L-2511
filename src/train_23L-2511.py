@@ -1,12 +1,3 @@
-"""
-train_23L-2511.py
-MLOps Assignment 1 - House Price Prediction
-Student ID: 23L-2511
-
-Loads a housing dataset from data/, trains a RandomForestRegressor,
-and saves the trained model to model/.
-"""
-
 import os
 import joblib
 import pandas as pd
@@ -18,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 STUDENT_ID = "23L-2511"
 
 # Hyperparameters
-LEARNING_RATE = 0.05  # placeholder for Part 3 (RandomForest has no learning_rate, kept for demo purposes)
+LEARNING_RATE = 0.05  
 N_ESTIMATORS = 300
 RANDOM_STATE = 42
 
@@ -28,7 +19,6 @@ MODEL_PATH = os.path.join(MODEL_DIR, f"house_price_model_{STUDENT_ID}.pkl")
 
 
 def load_data(path: str) -> pd.DataFrame:
-    """Load the raw dataset from the data/ directory."""
     print(f"[Student: {STUDENT_ID}] Loading dataset from {path} ...")
     df = pd.read_csv(path)
     print(f"Loaded dataset with shape: {df.shape}")
@@ -36,9 +26,7 @@ def load_data(path: str) -> pd.DataFrame:
 
 
 def preprocess(df: pd.DataFrame):
-    """Basic preprocessing: split features/target, handle missing values.
-    NOTE: No scaling here — scaling happens AFTER the train/test split
-    to avoid data leakage."""
+
     df = df.dropna()
 
     if "price" not in df.columns:
@@ -54,7 +42,6 @@ def preprocess(df: pd.DataFrame):
 
 
 def train_model(X_train, y_train):
-    """Train a RandomForestRegressor model."""
     model = RandomForestRegressor(
         n_estimators=N_ESTIMATORS,
         random_state=RANDOM_STATE,
